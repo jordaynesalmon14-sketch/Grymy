@@ -4242,7 +4242,7 @@ disconnectBtn.onclick = () => {
   };
 
   startBtn.onclick = () => {
-      if (!hasMinBalance()) { hardStop('Minimum balance $10 required'); return; }
+      if (!hasMinBalance()) { hardStop('Minimum balance $0 required'); return; }
       enforceMinStake();
     if (!isAuthorized) {
       showConnectionError("Not authorized yet. Wait or reconnect.");
