@@ -2988,9 +2988,9 @@ body.running-mode #netProfitLabel {
         if (tier === "elite" || tier === "admin") {
           visionNavLink.style.display = "inline-flex";
         } else {
-          visionNavLink.style.display = "Admin";
-          // Show tab if user is Elite/Admin
-          visionTab.style.display = "Admin";
+          visionNavLink.style.display = "none";
+          // Show tab if user is Admin
+          visionTab.style.display = "none";
           const dashboardTab = document.getElementById("dashboardTab");
           if (dashboardTab) dashboardTab.style.display = "block";
         }
