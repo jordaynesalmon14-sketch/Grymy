@@ -1,3 +1,0 @@
-{
-"rewrites": I{ "source": "/(.*)", "destination": "/" }l
-}
