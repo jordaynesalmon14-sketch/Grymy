@@ -2989,7 +2989,7 @@ body.running-mode #netProfitLabel {
           visionNavLink.style.display = "inline-flex";
         } else {
           visionNavLink.style.display = "none";
-          // Show tab if user is Admin
+          // Hide tab if user is not Admin
           visionTab.style.display = "none";
           const dashboardTab = document.getElementById("dashboardTab");
           if (dashboardTab) dashboardTab.style.display = "block";
