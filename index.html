@@ -4446,6 +4446,7 @@ if (currentTrade && currentTrade.mode === "match") {
           } else {
             losses++;
             lossStreak++;
+            if (lossStreak >= MAX_CONSECUTIVE_LOSSES) { hardStop('0 consecutive losses'); }
             winStreak = 0;
             signalLabel.textContent = "LOSS " + profit.toFixed(2);
 
