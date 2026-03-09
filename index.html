@@ -4691,7 +4691,7 @@ disconnectBtn.onclick = () => {
   };
 
   start3xBtn.onclick = () => {
-      if (!hasMinBalance()) { hardStop('Minimum balance $50 required'); return; }
+      if (!hasMinBalance()) { hardStop('Minimum balance $10 required'); return; }
       enforceMinStake();
     if (!isAuthorized) {
       showConnectionError("Not authorized yet. Wait or reconnect.");
