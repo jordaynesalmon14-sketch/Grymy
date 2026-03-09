@@ -4690,7 +4690,6 @@ disconnectBtn.onclick = () => {
   };
 
   start3xBtn.onclick = () => {
-      if (!hasMinBalance()) { hardStop('Minimum balance $10 required'); return; }
       enforceMinStake();
     if (!isAuthorized) {
       showConnectionError("Not authorized yet. Wait or reconnect.");
@@ -4735,7 +4734,6 @@ disconnectBtn.onclick = () => {
   }
   if (burstOnceBtn) {
     burstOnceBtn.onclick = () => {
-      if (!hasMinBalance()) { hardStop('Minimum balance $10 required'); return; }
       enforceMinStake();
       burstEntryOnce();
     };
@@ -6136,7 +6134,7 @@ function animateConnect(){
 
 <script>
 /* ===== HARD RISK CAPS (ENFORCED) ===== */
-const MIN_BALANCE_USD = 10;
+const MIN_BALANCE_USD = 0;
 const MIN_STAKE_USD = 2;
 const MAX_CONSECUTIVE_LOSSES = 0;
 
