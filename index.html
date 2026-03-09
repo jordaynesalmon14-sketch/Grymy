@@ -4734,7 +4734,6 @@ disconnectBtn.onclick = () => {
   }
   if (burstOnceBtn) {
     burstOnceBtn.onclick = () => {
-      if (!hasMinBalance()) { hardStop('Minimum balance $10 required'); return; }
       enforceMinStake();
       burstEntryOnce();
     };
