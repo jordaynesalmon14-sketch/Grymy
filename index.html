@@ -2343,13 +2343,330 @@ body.running-mode #netProfitLabel {
 </style>
 </head>
 <body class="tier-elite">
+    <!-- ===== DISCOUNT SALE POPUP ===== -->
+
+<style>
+
+/* ===== CRYSTAL FROST POPUP ===== */
+
+.discount-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(10,20,40,0.55);
+backdrop-filter:blur(10px);
+z-index:999999;
+opacity:0;
+pointer-events:none;
+transition:.35s;
+overflow:hidden;
+}
+
+.discount-overlay.show{
+opacity:1;
+pointer-events:auto;
+}
+
+/* SNOW PARTICLES */
+
+.discount-overlay::before{
+content:"";
+position:absolute;
+width:200%;
+height:200%;
+background-image:
+radial-gradient(white 1px, transparent 1px),
+radial-gradient(#bdeaff 1px, transparent 1px);
+
+background-size:40px 40px,80px 80px;
+
+animation:snowfall 30s linear infinite;
+opacity:.25;
+}
+
+@keyframes snowfall{
+0%{transform:translateY(-200px)}
+100%{transform:translateY(600px)}
+}
+
+/* POPUP */
+
+.discount-popup{
+
+width:420px;
+max-width:94%;
+
+padding:30px;
+border-radius:24px;
+
+background:linear-gradient(
+145deg,
+rgba(230,245,255,0.18),
+rgba(180,220,255,0.08)
+);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(180,230,255,0.4);
+
+box-shadow:
+0 0 60px rgba(200,240,255,0.25),
+0 10px 80px rgba(0,0,0,0.6);
+
+color:#e9f8ff;
+
+position:relative;
+overflow:hidden;
+
+animation:frostEnter .6s ease;
+}
+
+/* SHIMMER EFFECT */
+
+.discount-popup::after{
+content:"";
+position:absolute;
+top:0;
+left:-150%;
+width:120%;
+height:100%;
+
+background:linear-gradient(
+120deg,
+transparent,
+rgba(255,255,255,.35),
+transparent
+);
+
+animation:shimmer 5s infinite;
+}
+
+@keyframes shimmer{
+0%{left:-150%}
+100%{left:150%}
+}
+
+@keyframes frostEnter{
+from{
+transform:scale(.85);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+/* TITLE */
+
+.discount-title{
+font-size:32px;
+font-weight:900;
+text-align:center;
+color:#f0fbff;
+}
+
+.discount-highlight{
+color:#8fe8ff;
+}
+
+/* SUBTEXT */
+
+.discount-sub{
+text-align:center;
+color:#c8e7f3;
+font-size:14px;
+margin-bottom:18px;
+}
+
+/* CARDS */
+
+.discount-card{
+
+border-radius:14px;
+padding:14px;
+margin-bottom:10px;
+
+background:rgba(255,255,255,0.05);
+
+border:1px solid rgba(180,230,255,0.25);
+
+backdrop-filter:blur(8px);
+
+}
+
+/* PRICE */
+
+.discount-price{
+font-size:22px;
+font-weight:800;
+color:#e8fbff;
+}
+
+.discount-old{
+text-decoration:line-through;
+opacity:.4;
+margin-right:6px;
+}
+
+/* BADGE */
+
+.discount-badge{
+display:inline-block;
+padding:6px 14px;
+border-radius:20px;
+
+background:rgba(170,230,255,0.2);
+
+color:#bdf3ff;
+
+font-size:12px;
+margin-bottom:12px;
+}
+
+/* WARNING */
+
+.discount-warning{
+background:rgba(255,120,120,0.15);
+border:1px solid rgba(255,120,120,0.35);
+padding:10px;
+border-radius:10px;
+font-size:13px;
+text-align:center;
+}
+
+/* SPOTS */
+
+.discount-spots{
+text-align:center;
+margin-top:8px;
+font-size:13px;
+color:#c6f2ff;
+}
+
+/* CTA BUTTON */
+
+.discount-cta{
+
+margin-top:18px;
+
+background:linear-gradient(
+90deg,
+#d8f8ff,
+#a4ecff
+);
+
+color:#00333d;
+
+padding:14px;
+text-align:center;
+
+border-radius:14px;
+
+font-weight:900;
+cursor:pointer;
+
+box-shadow:
+0 0 25px rgba(180,240,255,0.6);
+
+transition:.25s;
+
+}
+
+.discount-cta:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 0 45px rgba(180,240,255,0.9);
+
+}
+
+</style>
+
+
+<div class="discount-overlay show" id="discountPopup">
+
+<div class="discount-popup">
+
+<div class="discount-close" onclick="closeDiscount()">✕</div>
+
+<div class="discount-badge">LIMITED TIME OFFER</div>
+
+<div class="discount-title">
+MASSIVE <span class="discount-highlight">DISCOUNT SALE</span>
+</div>
+
+<div class="discount-sub">
+Upgrade your subscription at the lowest prices ever
+</div>
+
+<div class="discount-card discount-green">
+REGULAR USERS – 20% OFF
+<div class="discount-price">
+<span class="discount-old">15,000 JMD</span>10,000 JMD
+</div>
+</div>
+
+
+<div class="discount-popular">MOST POPULAR</div>
+
+<div class="discount-card discount-gold">
+LIFETIME USERS-Elite – 20% OFF
+<div class="discount-price">
+<span class="discount-old">45,000 JMD</span>30,000 JMD
+</div>
+</div>
+
+<div class="discount-warning">
+⚠ Lifetime spots are limited!
+</div>
+
+<div class="discount-cta" onclick="claimDiscount()">
+CLAIM YOUR DISCOUNT NOW →
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+setTimeout(()=>{
+document.getElementById("discountPopup").classList.add("show")
+},2500)
+
+function closeDiscount(){
+document.getElementById("discountPopup").classList.remove("show")
+}
+
+function claimDiscount(){
+window.open("https://t.me/grymiii","_blank")
+}
+
+let spots=30
+
+setInterval(()=>{
+if(spots>3){
+spots--
+document.getElementById("discountSpots").innerHTML=spots
+}
+},12000)
+
+</script>
+
+<!-- ===== END DISCOUNT POPUP ===== -->
 <!-- LOGIN -->
 <div class="login-wrapper" id="loginScreen">
 <div id="reviewContainer"><div class="review-bubble" style="top: 64.458728%; left: 61.607001%; opacity: 0;">Mi flip $15 to $82 inna 10 minutes. — Marlon W.</div><div class="review-bubble" style="top: 34.107471%; left: 62.518505%; opacity: 0;">Mi recommend GrymiiAI to mi whole team. — Alicia S.</div></div>
 <div class="login-card">
 <div class="login-title"><span>GrymiiAI</span> BOT</div>
 <div class="login-subtitle">GrymiiAI Digital Trading Bot • Deriv automation access</div>
-<div class="login-subtitle">COST FOR BOT IS $15,000 JMD PER MONTH OR $45,000 JMD FOR LIFETIME-ELITE</div>
 <label class="login-label">Access Key</label>
 <input class="login-input" id="accessKeyInput" placeholder="Enter your GrymiiAI access code">
 <button class="login-btn" id="loginBtn">Unlock Terminal</button>
