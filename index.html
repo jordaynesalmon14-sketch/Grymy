@@ -5302,8 +5302,7 @@ if (currentTrade && currentTrade.false) {
             losses++;
             lossStreak++;
             compoundWinStreak = 0;
-    if (typeof MAX_CONSECUTIVE_LOSSES !== "undefined" && typeof hardStop === "function" && lossStreak >= MAX_CONSECUTIVE_LOSSES) { hardStop('2 consecutive losses'); }
-            winStreak = 0;
+                winStreak = 0;
             signalLabel.textContent = "LOSS " + profit.toFixed(2);
 
             if (currentTrade && currentTrade.false) {
