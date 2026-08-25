@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STACKWITHCRUZ</title>
-<meta name="description" content="Official links — Stackwithcruz">
+<title>PUNCHWITHCRUZ</title>
+<meta name="description" content="Official links — Punchwithcruz">
 </head>
 <body>
 <!--
@@ -660,7 +660,7 @@
   const CONFIG = {
 
     // Your display name, shown under the avatar
-    name: "STACKWITHCRUZ",
+    name: "PUNCHWITHCRUZ",
 
     // Small verified-checkmark badge shown right after your name
     showVerifiedBadge: true,
@@ -689,12 +689,8 @@
 
     // Row of icon-only social links (no image needed, just URLs)
     socialLinks: [
-      { platform: "instagram", url: "https://instagram.com/stackwithcruz" },
-      { platform: "tiktok",    url: "https://tiktok.com/" },
-      { platform: "snapchat",  url: "https://www.snapchat.com/add/" },
-      { platform: "youtube",   url: "https://www.youtube.com/" },
-      { platform: "x",         url: "https://x.com/" },
-      { platform: "kick",      url: "https://kick.com/" }
+      { platform: "instagram", url: "https://instagram.com/punchwithcruz" },
+      { platform: "tiktok",    url: "https://tiktok.com/" }
     ],
 
     // Featured link cards (thumbnail + title + arrow). Add/remove
@@ -710,7 +706,8 @@
     // title (must match exactly) to make those specific words glow
     // and pulse in a contrasting color.
     featuredLinks: [
-      { title: "COME GET PAID WITH ME", highlight: "GET PAID", url: "https://t.me/stackwithcruz", thumbUrl: "", icon: "growth" }
+      { title: "GET YOUR PRODUCTS", highlight: "PRODUCTS", url: "https://cruzempire.netlify.app/", thumbUrl: "", icon: "bag" },
+      { title: "COME GET PAID WITH ME", highlight: "GET PAID", url: "https://t.me/punchwithcruz", thumbUrl: "", icon: "growth" }
     ],
 
     // YouTube: paste a PLAYLIST ID and the embed plays whatever is
@@ -729,31 +726,17 @@
     // If true, the iframe will be inserted and autoplay (muted) on load instead of showing a clickable poster
     autoplayOnLoad: false,
 
-    // Spotify: this is now just the FALLBACK, shown instantly while
-    // the page checks Spotify's API for your actual newest release
-    // (via a separate Cloudflare Worker — see latest-release-worker.js).
-    // If that check ever fails for any reason, this link is what
-    // shows instead — keep it reasonably current, but you no longer
-    // need to update it every release.
-    spotifyUrl: "https://open.spotify.com/track/48rsYvIQXUAtxcmIoStOaM?si=172def46981941d8",
+    // Spotify: music player embed (set to "" to disable)
+    spotifyUrl: "",
 
-    // The URL of your deployed Cloudflare Worker. REPLACE THIS —
-    // you'll get the real one after deploying the Worker, it looks
-    // like https://your-worker-name.your-subdomain.workers.dev
-    latestReleaseEndpoint: "https://REPLACE_WITH_YOUR_WORKER_URL.workers.dev",
+    // The URL of your deployed Cloudflare Worker (optional)
+    latestReleaseEndpoint: "",
 
-    // Height of the Spotify embed in pixels. This was corrected via
-    // direct DOM inspection of the live page — the previous 152px
-    // guess was leaving ~66px of empty space, since this specific
-    // embed's real content only renders at ~82px. 88px gives a
-    // small buffer above that. If you ever embed a genuinely
-    // multi-track album or playlist and want more of the tracklist
-    // visible, you'll likely need to bump this back up — but for a
-    // single song like this one, a taller box just adds blank space.
+    // Height of the Spotify embed in pixels
     spotifyEmbedHeight: 88,
 
     // Small text at the very bottom (a small wifi icon is shown before it automatically)
-    footerText: "connection secure · stackwithcruz"
+    footerText: "connection secure · punchwithcruz"
   };
   // ============================================================
   // END OF EDITABLE SECTION
@@ -856,13 +839,25 @@
       </a>`;
     }).join('');
 
-    let spotifyEmbedSrc = '';
-    let spotifyEmbedHeight = CONFIG.spotifyEmbedHeight || 152;
-    const spotifyMatch = (CONFIG.spotifyUrl || '').match(/open\.spotify\.com\/(track|album|playlist|artist)\/([a-zA-Z0-9]+)/);
-    if(spotifyMatch){
-      const spotifyType = spotifyMatch[1];
-      const spotifyId = spotifyMatch[2];
-      spotifyEmbedSrc = `https://open.spotify.com/embed/${spotifyType}/${spotifyId}?utm_source=generator`;
+    let spotifyEmbedHtml = '';
+    if(CONFIG.spotifyUrl){
+      const spotifyMatch = CONFIG.spotifyUrl.match(/open\.spotify\.com\/(track|album|playlist|artist)\/([a-zA-Z0-9]+)/);
+      if(spotifyMatch){
+        const spotifyType = spotifyMatch[1];
+        const spotifyId = spotifyMatch[2];
+        const spotifyEmbedSrc = `https://open.spotify.com/embed/${spotifyType}/${spotifyId}?utm_source=generator`;
+        const spotifyEmbedHeight = CONFIG.spotifyEmbedHeight || 88;
+        spotifyEmbedHtml = `
+        <div class="bio-spotify-wrap" id="bioSpotifyWrap" style="height:${spotifyEmbedHeight}px">
+          <iframe
+            id="bioSpotifyIframe"
+            src="${spotifyEmbedSrc}"
+            title="Latest music"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+          </iframe>
+        </div>`;
+      }
     }
 
     let floatLayerHtml = '';
@@ -928,15 +923,7 @@
         <nav class="bio-icon-row" aria-label="Social profiles">${iconsHtml}</nav>
         <nav class="bio-links" aria-label="Featured links">${cardsHtml}</nav>
         <!-- photo grid removed -->
-        <div class="bio-spotify-wrap" id="bioSpotifyWrap" style="height:${spotifyEmbedHeight}px">
-          <iframe
-            id="bioSpotifyIframe"
-            src="${spotifyEmbedSrc}"
-            title="Latest music"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy">
-          </iframe>
-        </div>
+        ${spotifyEmbedHtml}
         <footer class="bio-footer">
           <svg class="bio-footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${THUMB_ICONS.wifi}</svg>
           <span>${escapeHtml(CONFIG.footerText)}</span>
